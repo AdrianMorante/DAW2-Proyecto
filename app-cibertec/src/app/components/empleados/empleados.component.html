@@ -1,0 +1,233 @@
+<div class="container mt-5">
+  <h2 class="display-4 fw-bold text-center mb-4 text-primary">
+    Listado de Empleados
+  </h2>
+
+  <!-- Botón "Nuevo empleado" -->
+  <div class="d-flex justify-content-start mb-4">
+    <button
+      class="btn btn-primary shadow-sm"
+      data-bs-toggle="modal"
+      data-bs-target="#modalEmpleado"
+      (click)="titulo('Crear')"
+    >
+      <i class="bi bi-plus-circle"></i> Nuevo empleado
+    </button>
+  </div>
+
+  <!-- Tabla de empleados -->
+  <div class="table-container table-responsive rounded shadow">
+    <table class="table table-success table-striped">
+      <thead class="bg-dark text-white">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Puesto</th>
+          <th>Salario</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let empleado of listaEmpleados; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ empleado.nombre }}</td>
+          <td>{{ empleado.apellido }}</td>
+          <td>{{ empleado.puesto }}</td>
+          <td>
+            <span class="badge bg-success fs-6">
+              S/ {{ empleado.salario }}
+            </span>
+          </td>
+          <td>
+            <button
+              class="btn btn-success btn-sm shadow-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#modalEmpleado"
+              (click)="titulo('Editar', empleado.id)"
+            >
+              <i class="bi bi-pencil-square"></i> Editar
+            </button>
+          </td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm shadow-sm"
+              (click)="eliminarEmpleado(empleado.id)"
+            >
+              <i class="bi bi-trash"></i> Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal Crear/Editar -->
+  <form [formGroup]="formEmpleado" novalidate>
+    <div
+      class="modal fade"
+      id="modalEmpleado"
+      tabindex="-1"
+      aria-labelledby="modalEmpleadoLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="modalEmpleadoLabel">{{ title }}</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <!-- Nombre -->
+              <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  class="form-control"
+                  formControlName="nombre"
+                  placeholder="Ingrese el nombre"
+                />
+                <div
+                  *ngIf="
+                    formEmpleado.get('nombre')?.touched &&
+                    formEmpleado.get('nombre')?.invalid
+                  "
+                  class="text-danger mt-1"
+                >
+                  <small
+                    *ngIf="formEmpleado.get('nombre')?.errors?.['required']"
+                  >
+                    El nombre es obligatorio.
+                  </small>
+                  <small
+                    *ngIf="formEmpleado.get('nombre')?.errors?.['pattern']"
+                  >
+                    El nombre solo debe contener letras.
+                  </small>
+                </div>
+              </div>
+
+              <!-- Apellido -->
+              <div class="col-md-6">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input
+                  type="text"
+                  id="apellido"
+                  class="form-control"
+                  formControlName="apellido"
+                  placeholder="Ingrese el apellido"
+                />
+                <div
+                  *ngIf="
+                    formEmpleado.get('apellido')?.touched &&
+                    formEmpleado.get('apellido')?.invalid
+                  "
+                  class="text-danger mt-1"
+                >
+                  <small
+                    *ngIf="formEmpleado.get('apellido')?.errors?.['required']"
+                  >
+                    El apellido es obligatorio.
+                  </small>
+                  <small
+                    *ngIf="formEmpleado.get('apellido')?.errors?.['pattern']"
+                  >
+                    El apellido solo debe contener letras.
+                  </small>
+                </div>
+              </div>
+
+              <!-- Puesto -->
+              <div class="col-md-6">
+                <label for="puesto" class="form-label">Puesto</label>
+                <input
+                  type="text"
+                  id="puesto"
+                  class="form-control"
+                  formControlName="puesto"
+                  placeholder="Ingrese el puesto"
+                />
+                <div
+                  *ngIf="
+                    formEmpleado.get('puesto')?.touched &&
+                    formEmpleado.get('puesto')?.invalid
+                  "
+                  class="text-danger mt-1"
+                >
+                  <small
+                    *ngIf="formEmpleado.get('puesto')?.errors?.['required']"
+                  >
+                    El puesto es obligatorio.
+                  </small>
+                  <small
+                    *ngIf="formEmpleado.get('puesto')?.errors?.['pattern']"
+                  >
+                    El puesto solo debe contener letras.
+                  </small>
+                </div>
+              </div>
+
+              <!-- Salario -->
+              <div class="mb-3">
+                <label for="salario" class="form-label">Salario</label>
+                <input
+                  type="number"
+                  id="salario"
+                  class="form-control"
+                  formControlName="salario"
+                  placeholder="Ingrese salario"
+                />
+
+                <div
+                  *ngIf="
+                    formEmpleado.get('salario')?.touched &&
+                    formEmpleado.get('salario')?.errors
+                  "
+                >
+                  <small
+                    class="text-danger"
+                    *ngIf="formEmpleado.get('salario')?.hasError('required')"
+                  >
+                    El salario es obligatorio.
+                  </small>
+                  <small
+                    class="text-danger"
+                    *ngIf="
+                      formEmpleado.get('salario')?.hasError('salarioNegativo')
+                    "
+                  >
+                    El salario no debe ser negativo.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              <i class="bi bi-x-circle"></i> Cerrar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              [disabled]="formEmpleado.invalid"
+              (click)="crearOActualizarEmpleado()"
+            >
+              <i class="bi bi-save"></i> {{ nameBoton }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

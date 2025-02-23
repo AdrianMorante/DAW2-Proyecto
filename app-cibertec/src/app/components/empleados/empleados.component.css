@@ -1,0 +1,53 @@
+/* Asegúrate de no tener reglas conflictivas para el modal */
+.modal-backdrop.show {
+  opacity: 0.5;
+  /* Controla la opacidad del fondo del modal */
+}
+
+.modal-content {
+  background-color: white;
+  /* Asegúrate de que el contenido del modal sea visible */
+}
+
+/* Botones */
+.btn-danger {
+  background-color: red;
+  border-color: red;
+}
+
+.btn-success {
+  background-color: green;
+  border-color: green;
+}
+
+.btn-primary {
+  background-color: blue;
+  border-color: blue;
+}
+
+/* Tabla */
+.table thead {
+  background-color: black;
+  color: white;
+}
+
+.table tbody tr {
+  background-color: white;
+  color: black;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+  /* Opcional: para un efecto de rayado */
+}
+
+.hora-container {
+  background-color: black;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  width: 100%;
+  text-align: center;
+  display: block;
+  box-sizing: border-box;
+}

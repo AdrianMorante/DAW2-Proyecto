@@ -1,0 +1,86 @@
+<div
+  class="container d-flex justify-content-center align-items-center min-vh-100"
+>
+  <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4">Inicio de sesión</h2>
+      <form [formGroup]="formLogin" (ngSubmit)="login()">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Correo electrónico</label
+          >
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            placeholder="Ingresa tu correo electrónico"
+            required
+          />
+          <div
+            *ngIf="
+              formLogin.get('email')?.invalid && formLogin.get('email')?.touched
+            "
+            class="text-danger"
+          >
+            Email inválido. Debe ser un correo válido.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="inputPassword" class="form-label">Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+            placeholder="Ingresa tu contraseña"
+            required
+          />
+        </div>
+        <div class="mb-3 text-center">
+          <span
+            ><a [routerLink]="['/register']"
+              >¿No tienes cuenta? Regístrate</a
+            ></span
+          >
+        </div>
+        <div class="d-grid">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="formLogin.invalid"
+          >
+            Ingresar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de error -->
+<div
+  class="modal fade"
+  id="errorModal"
+  tabindex="-1"
+  aria-labelledby="errorModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Correo o contraseña incorrecta.</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
